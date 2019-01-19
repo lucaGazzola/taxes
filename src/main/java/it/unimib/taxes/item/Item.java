@@ -1,4 +1,4 @@
-package taxes.item;
+package it.unimib.taxes.item;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -12,6 +12,16 @@ public class Item {
 	
 	public Item(String name, double price, boolean imported, boolean exempt) {
 		
+		validateInput(name, price);
+		
+		this.name = name;
+		this.price = price;
+		this.imported = imported;
+		this.exempt = exempt;
+		
+	}
+	
+	private void validateInput(String name, double price) {
 		if(name == null) {
 			throw(new IllegalArgumentException());
 		}
@@ -23,12 +33,6 @@ public class Item {
 		if(!(price > 0) || BigDecimal.valueOf(price).scale() > 2) {
 			throw(new IllegalArgumentException());
 		}
-		
-		this.name = name;
-		this.price = price;
-		this.imported = imported;
-		this.exempt = exempt;
-		
 	}
 	
 	public double getPrice(){
