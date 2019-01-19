@@ -6,11 +6,15 @@ import static org.junit.Assert.assertNotEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+import static org.mockito.Mockito.*;
 
 import it.unimib.taxes.item.Item;
-import it.unimib.taxes.utils.MyTaxesCalculator;
 import it.unimib.taxes.utils.TaxesCalculator;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
@@ -35,7 +39,11 @@ public class InvoiceTest {
 	Item headachePills = new Item("packet of headache pills", 9.75, false, true);
 	Item importedChocolateB = new Item("imported box of chocolate", 11.25, true, true);
 	
-	TaxesCalculator calculator = new MyTaxesCalculator();
+	@Mock
+	TaxesCalculator calculator;
+	
+	@Rule 
+	public MockitoRule mockitoRule = MockitoJUnit.rule();
 	
 	@Test
 	public void testConstructorAndGetters() {
@@ -154,6 +162,11 @@ public class InvoiceTest {
 		invoice.addItem(musicCD);
 		invoice.addItem(chocolateBar);
 		
+		when(calculator.calculateTaxes(book)).thenReturn(0.0);
+		when(calculator.calculateTaxes(musicCD)).thenReturn(1.5);
+		when(calculator.calculateTaxes(chocolateBar)).thenReturn(0.0);
+
+		
 		assertEquals(invoice.getTotalPrice(), 29.83, EPSILON);
 		assertEquals(invoice.getTaxes(), 1.50, EPSILON);
 		
@@ -165,6 +178,9 @@ public class InvoiceTest {
 		Invoice invoice = new Invoice(1, "luca", calculator);
 		invoice.addItem(importedChocolateA);
 		invoice.addItem(importedPerfumeA);
+		
+		when(calculator.calculateTaxes(importedChocolateA)).thenReturn(0.5);
+		when(calculator.calculateTaxes(importedPerfumeA)).thenReturn(7.15);
 		
 		assertEquals(invoice.getTotalPrice(), 65.15, EPSILON);
 		assertEquals(invoice.getTaxes(), 7.65, EPSILON);
@@ -179,6 +195,12 @@ public class InvoiceTest {
 		invoice.addItem(perfume);
 		invoice.addItem(headachePills);
 		invoice.addItem(importedChocolateB);
+		
+		when(calculator.calculateTaxes(importedPerfumeB)).thenReturn(4.2);
+		when(calculator.calculateTaxes(perfume)).thenReturn(1.9);
+		when(calculator.calculateTaxes(headachePills)).thenReturn(0.0);
+		when(calculator.calculateTaxes(importedChocolateB)).thenReturn(0.6);
+
 		
 		assertEquals(invoice.getTotalPrice(), 74.68, EPSILON);
 		assertEquals(invoice.getTaxes(), 6.70, EPSILON);
@@ -195,6 +217,11 @@ public class InvoiceTest {
 		invoice.addItem(headachePills);
 		invoice.addItem(importedChocolateB);
 		
+		when(calculator.calculateTaxes(importedPerfumeB)).thenReturn(4.2);
+		when(calculator.calculateTaxes(perfume)).thenReturn(1.9);
+		when(calculator.calculateTaxes(headachePills)).thenReturn(0.0);
+		when(calculator.calculateTaxes(importedChocolateB)).thenReturn(0.6);
+		
 		assertEquals(invoice.getTotalPrice(), 106.87, EPSILON);
 		assertEquals(invoice.getTaxes(), 10.90, EPSILON);
 		
@@ -207,6 +234,11 @@ public class InvoiceTest {
 		invoice.addItem(perfume);
 		invoice.addItem(headachePills);
 		invoice.addItem(importedChocolateB);
+		
+		when(calculator.calculateTaxes(importedPerfumeB)).thenReturn(4.2);
+		when(calculator.calculateTaxes(perfume)).thenReturn(1.9);
+		when(calculator.calculateTaxes(headachePills)).thenReturn(0.0);
+		when(calculator.calculateTaxes(importedChocolateB)).thenReturn(0.6);
 		
 		assertEquals(invoice.toString(),"1 imported bottle of perfume: 32.19\n"
 				+ "1 bottle of perfume: 20.89\n"
@@ -223,6 +255,11 @@ public class InvoiceTest {
 		invoice.addItem(perfume);
 		invoice.addItem(headachePills);
 		invoice.addItem(importedChocolateB);
+		
+		when(calculator.calculateTaxes(importedPerfumeB)).thenReturn(4.2);
+		when(calculator.calculateTaxes(perfume)).thenReturn(1.9);
+		when(calculator.calculateTaxes(headachePills)).thenReturn(0.0);
+		when(calculator.calculateTaxes(importedChocolateB)).thenReturn(0.6);
 		
 		assertEquals(invoice.toString(),"2 imported bottle of perfume: 32.19\n"
 				+ "1 bottle of perfume: 20.89\n"
