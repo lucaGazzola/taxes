@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import it.unimib.taxes.item.Item;
 
-public class TaxesCalculatorTest {
+public class MyTaxesCalculatorTest {
 	
 	private static final double EPSILON = 0.00001;
 	
@@ -28,23 +28,23 @@ public class TaxesCalculatorTest {
 	Item importedPerfumeA = new Item("imported perfume", 47.50, true, false);
 	Item importedPerfumeB = new Item("imported perfume", 27.99, true, false);
 
-
+	TaxesCalculator calculator = new MyTaxesCalculator();
 	
 	@Test
 	public void testExemptNotImported() {
 		
-		assertEquals(TaxesCalculator.calculateTaxes(book), 0, EPSILON);	
-		assertEquals(TaxesCalculator.calculateTaxes(chocolateBar), 0, EPSILON);	
-		assertEquals(TaxesCalculator.calculateTaxes(headachePills), 0, EPSILON);	
+		assertEquals(calculator.calculateTaxes(book), 0, EPSILON);	
+		assertEquals(calculator.calculateTaxes(chocolateBar), 0, EPSILON);	
+		assertEquals(calculator.calculateTaxes(headachePills), 0, EPSILON);	
 
 	}
 	
 	@Test
 	public void testNotExemptNotImported() {
 		
-		assertEquals(TaxesCalculator.calculateTaxes(musicCD), 1.5, EPSILON);
-		assertEquals(TaxesCalculator.calculateTaxes(guitar), 75, EPSILON);
-		assertEquals(TaxesCalculator.calculateTaxes(perfume), 1.9, EPSILON);	
+		assertEquals(calculator.calculateTaxes(musicCD), 1.5, EPSILON);
+		assertEquals(calculator.calculateTaxes(guitar), 75, EPSILON);
+		assertEquals(calculator.calculateTaxes(perfume), 1.9, EPSILON);	
 
 		
 	}
@@ -52,16 +52,16 @@ public class TaxesCalculatorTest {
 	@Test
 	public void testExemptImported() {
 		
-		assertEquals(TaxesCalculator.calculateTaxes(importedChocolateA), 0.5, EPSILON);
-		assertEquals(TaxesCalculator.calculateTaxes(importedChocolateB), 0.6, EPSILON);	
+		assertEquals(calculator.calculateTaxes(importedChocolateA), 0.5, EPSILON);
+		assertEquals(calculator.calculateTaxes(importedChocolateB), 0.6, EPSILON);	
 		
 	}
 	
 	@Test
 	public void testNotExemptImported() {
 		
-		assertEquals(TaxesCalculator.calculateTaxes(importedPerfumeA), 7.15, EPSILON);	
-		assertEquals(TaxesCalculator.calculateTaxes(importedPerfumeB), 4.2, EPSILON);	
+		assertEquals(calculator.calculateTaxes(importedPerfumeA), 7.15, EPSILON);	
+		assertEquals(calculator.calculateTaxes(importedPerfumeB), 4.2, EPSILON);	
 
 		
 	}

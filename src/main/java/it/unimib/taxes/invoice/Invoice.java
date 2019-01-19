@@ -12,20 +12,26 @@ public class Invoice {
 	private final List<Item> items;
 	private final int id;
 	private final String customerName;
+	private final TaxesCalculator calculator;
 	
-	public Invoice(int id, String customerName) {
+	public Invoice(int id, String customerName, TaxesCalculator calculator) {
 		
-		validateInput(customerName, id);
+		validateInput(customerName, id, calculator);
 		
 		this.items = new ArrayList<Item>();
 		this.id = id;
 		this.customerName = customerName;
+		this.calculator = calculator;
 		
 	}
 	
-	private void validateInput(String customerName, int id) {
+	private void validateInput(String customerName, int id, TaxesCalculator calculator) {
 		
 		if(customerName == null) {
+			throw(new IllegalArgumentException());
+		}
+		
+		if(calculator == null) {
 			throw(new IllegalArgumentException());
 		}
 		
@@ -72,7 +78,7 @@ public class Invoice {
 		double total = 0;
 		
 		for(Item item : items) {
-			total += item.getPrice() + TaxesCalculator.calculateTaxes(item);
+			total += item.getPrice() + calculator.calculateTaxes(item);
 		}
 		
 		return total;
@@ -84,7 +90,7 @@ public class Invoice {
 		double total = 0;
 		
 		for(Item item : items) {
-			total += TaxesCalculator.calculateTaxes(item);
+			total += calculator.calculateTaxes(item);
 		}
 		
 		return total;	

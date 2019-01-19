@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import it.unimib.taxes.item.Item;
+import it.unimib.taxes.utils.MyTaxesCalculator;
+import it.unimib.taxes.utils.TaxesCalculator;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
@@ -33,10 +35,12 @@ public class InvoiceTest {
 	Item headachePills = new Item("headache pills", 9.75, false, true);
 	Item importedChocolateB = new Item("imported box of chocolate", 11.25, true, true);
 	
+	TaxesCalculator calculator = new MyTaxesCalculator();
+	
 	@Test
 	public void testConstructorAndGetters() {
 		
-		Invoice invoice = new Invoice(1, "luca");
+		Invoice invoice = new Invoice(1, "luca", calculator);
 		invoice.addItem(book);
 		invoice.addItem(musicCD);
 		invoice.addItem(chocolateBar);
@@ -56,14 +60,14 @@ public class InvoiceTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testEmptyNameArgument() {
 		
-		Invoice invoice = new Invoice(1, "");
+		Invoice invoice = new Invoice(1, "", calculator);
 		
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testNullNameArgument() {
 		
-		Invoice invoice = new Invoice(1, null);
+		Invoice invoice = new Invoice(1, null, calculator);
 		
 	}
 	
@@ -71,7 +75,7 @@ public class InvoiceTest {
 	@Parameters({"-1", "-2147483648"})
 	public void testIllegalPriceArgument(int id) {
 		
-		Invoice invoice = new Invoice(id, "luca");
+		Invoice invoice = new Invoice(id, "luca", calculator);
 		
 	}
 	
@@ -79,7 +83,7 @@ public class InvoiceTest {
 	@Parameters({"0", "1", "2147483647"})
 	public void testLegalPriceArgument(int id) {
 		
-		Invoice invoice = new Invoice(id, "luca");
+		Invoice invoice = new Invoice(id, "luca", calculator);
 		assertEquals(invoice.getId(), id);
 		
 	}
@@ -88,22 +92,20 @@ public class InvoiceTest {
 	@Parameters({"a" , "niccolò" , "цлыовшщыд"})
 	public void testLegalNameArgument(String name) {
 		
-		Invoice invoice = new Invoice(1, name);
+		Invoice invoice = new Invoice(1, name, calculator);
 		assertEquals(invoice.getCustomerName(), name);
 		
 	}
 	
 	@Test
 	public void testEqualsAndHashCode() {
-
-		Item itemD = new Item("imported bottle of perfume", 47.50, true, false);
 		
-		Invoice invoiceA = new Invoice(1, "luca");
+		Invoice invoiceA = new Invoice(1, "luca", calculator);
 		invoiceA.addItem(book);
 		invoiceA.addItem(musicCD);
 		invoiceA.addItem(chocolateBar);
 		
-		Invoice invoiceB = new Invoice(1, "luca");
+		Invoice invoiceB = new Invoice(1, "luca", calculator);
 		invoiceB.addItem(book);
 		invoiceB.addItem(musicCD);
 		invoiceB.addItem(chocolateBar);
@@ -112,7 +114,7 @@ public class InvoiceTest {
 		assertEquals(invoiceA.hashCode(), invoiceB.hashCode());
 		
 		// different id
-		invoiceB = new Invoice(2, "luca");
+		invoiceB = new Invoice(2, "luca", calculator);
 		invoiceB.addItem(book);
 		invoiceB.addItem(musicCD);
 		invoiceB.addItem(chocolateBar);		
@@ -120,7 +122,7 @@ public class InvoiceTest {
 		assertNotEquals(invoiceA.hashCode(),invoiceB.hashCode());	
 		
 		// different name
-		invoiceB = new Invoice(1, "franco");
+		invoiceB = new Invoice(1, "franco", calculator);
 		invoiceB.addItem(book);
 		invoiceB.addItem(musicCD);
 		invoiceB.addItem(chocolateBar);		
@@ -128,7 +130,7 @@ public class InvoiceTest {
 		assertNotEquals(invoiceA.hashCode(),invoiceB.hashCode());	
 		
 		//different items
-		invoiceB = new Invoice(1, "luca");
+		invoiceB = new Invoice(1, "luca", calculator);
 		invoiceB.addItem(book);
 		invoiceB.addItem(musicCD);
 		invoiceB.addItem(chocolateBar);
@@ -137,7 +139,7 @@ public class InvoiceTest {
 		assertNotEquals(invoiceA.hashCode(),invoiceB.hashCode());
 
 		//everything different
-		invoiceB = new Invoice(2, "franco");
+		invoiceB = new Invoice(2, "franco", calculator);
 		invoiceB.addItem(importedChocolateA);
 		assertNotEquals(invoiceA,invoiceB);			
 		assertNotEquals(invoiceA.hashCode(),invoiceB.hashCode());
@@ -147,7 +149,7 @@ public class InvoiceTest {
 	@Test
 	public void testFirstInput() {
 		
-		Invoice invoice = new Invoice(1, "luca");
+		Invoice invoice = new Invoice(1, "luca", calculator);
 		invoice.addItem(book);
 		invoice.addItem(musicCD);
 		invoice.addItem(chocolateBar);
@@ -160,7 +162,7 @@ public class InvoiceTest {
 	@Test
 	public void testSecondInput() {
 		
-		Invoice invoice = new Invoice(1, "luca");
+		Invoice invoice = new Invoice(1, "luca", calculator);
 		invoice.addItem(importedChocolateA);
 		invoice.addItem(importedPerfumeA);
 		
@@ -172,7 +174,7 @@ public class InvoiceTest {
 	@Test
 	public void testThirdInput() {
 		
-		Invoice invoice = new Invoice(1, "luca");
+		Invoice invoice = new Invoice(1, "luca", calculator);
 		invoice.addItem(importedPerfumeB);
 		invoice.addItem(perfume);
 		invoice.addItem(headachePills);
