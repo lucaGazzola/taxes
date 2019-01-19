@@ -8,16 +8,16 @@ public class Item {
 	private final String name;
 	private final double price;
 	private final boolean imported;
-	private final boolean exempt;
+	private final Type type;
 	
-	public Item(String name, double price, boolean imported, boolean exempt) {
+	public Item(String name, double price, boolean imported, Type type) {
 		
 		validateInput(name, price);
 		
 		this.name = name;
 		this.price = price;
 		this.imported = imported;
-		this.exempt = exempt;
+		this.type = type;
 		
 	}
 	
@@ -43,8 +43,8 @@ public class Item {
 		return this.imported;
 	}
 	
-	public boolean isExempt() {
-		return this.exempt;
+	public Type getType() {
+		return this.type;
 	}
 	
 	public String getName() {
@@ -72,7 +72,7 @@ public class Item {
 			return false;
 		}
 		
-		if(other.isExempt() != this.exempt) {
+		if(other.getType() != this.type) {
 			return false;
 		}
 		
@@ -86,7 +86,7 @@ public class Item {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.name, this.price, this.imported, this.exempt);
+		return Objects.hash(this.name, this.price, this.imported, this.type);
 	}
 	
 	@Override

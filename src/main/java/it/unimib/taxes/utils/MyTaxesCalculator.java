@@ -1,6 +1,7 @@
 package it.unimib.taxes.utils;
 
 import it.unimib.taxes.item.Item;
+import it.unimib.taxes.item.Type;
 
 public class MyTaxesCalculator implements TaxesCalculator{
 	
@@ -17,7 +18,7 @@ public class MyTaxesCalculator implements TaxesCalculator{
 			
 		}
 		
-		if(!item.isExempt()) {
+		if(!isExempt(item)) {
 			
 			tax += Math.ceil((item.getPrice() * BASIC_TAX) * 20.0) / 20.0;
 
@@ -25,5 +26,11 @@ public class MyTaxesCalculator implements TaxesCalculator{
 		
 		return tax;
 	}
+
+	private boolean isExempt(Item item) {
+		return (item.getType() == Type.BOOK || item.getType() == Type.FOOD 
+				|| item.getType() == Type.MEDICAL_PRODUCT);
+	}
+	
 
 }

@@ -18,25 +18,25 @@ public class ItemTest {
 	@Test
 	public void testConstructorAndGetters() {
 		
-		Item item = new Item("War and Peace", 14.90, false, true);
+		Item item = new Item("War and Peace", 14.90, false, Type.BOOK);
 		assertEquals(item.getName(), "War and Peace");
 		assertEquals(item.getPrice(), 14.90, EPSILON);
 		assertEquals(item.isImported(), false);
-		assertEquals(item.isExempt(), true);
+		assertEquals(item.getType(), Type.BOOK);
 		
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testEmptyNameArgument() {
 		
-		Item item = new Item("", 14.90, false, true);
+		Item item = new Item("", 14.90, false, Type.BOOK);
 		
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testNullNameArgument() {
 		
-		Item item = new Item(null, 14.90, false, true);
+		Item item = new Item(null, 14.90, false, Type.BOOK);
 		
 	}
 	
@@ -44,7 +44,7 @@ public class ItemTest {
 	@Parameters({"0", "-1", "-1E308", "0.001"})
 	public void testIllegalPriceArgument(double price) {
 		
-		Item item = new Item("War and Peace", price, false, true);
+		Item item = new Item("War and Peace", price, false, Type.BOOK);
 		
 	}
 	
@@ -52,7 +52,7 @@ public class ItemTest {
 	@Parameters({"0.01", "1", "1E308"})
 	public void testLegalPriceArgument(double price) {
 		
-		Item item = new Item("War and Peace", price, false, true);
+		Item item = new Item("War and Peace", price, false, Type.BOOK);
 		assertEquals(item.getPrice(), price, EPSILON);
 		
 	}
@@ -61,7 +61,7 @@ public class ItemTest {
 	@Parameters({"a" , "città" , "fish & chips", "цлыовшщыд дыжфц"})
 	public void testLegalNameArgument(String name) {
 		
-		Item item = new Item(name, 14.90, false, true);
+		Item item = new Item(name, 14.90, false, Type.BOOK);
 		assertEquals(item.getName(), name);
 		
 	}
@@ -69,33 +69,33 @@ public class ItemTest {
 	@Test
 	public void testEqualsAndHashCode() {
 
-		Item itemA = new Item("War and Peace", 14.90, false, true);
-		Item itemB = new Item("War and Peace", 14.90, false, true);
+		Item itemA = new Item("War and Peace", 14.90, false, Type.BOOK);
+		Item itemB = new Item("War and Peace", 14.90, false, Type.BOOK);
 		assertEquals(itemA, itemB);
 		assertEquals(itemA.hashCode(), itemB.hashCode());
 		
 		// different price
-		itemB = new Item("War and Peace", 14.91, false, true);
+		itemB = new Item("War and Peace", 14.91, false, Type.BOOK);
 		assertNotEquals(itemA,itemB);	
 		assertNotEquals(itemA.hashCode(),itemB.hashCode());	
 		
 		// different name
-		itemB = new Item("War and Peac", 14.90, false, true);
+		itemB = new Item("War and Peac", 14.90, false, Type.BOOK);
 		assertNotEquals(itemA,itemB);
 		assertNotEquals(itemA.hashCode(),itemB.hashCode());	
 		
-		//different exemption
-		itemB = new Item("War and Peace", 14.90, false, false);
+		//different type
+		itemB = new Item("War and Peace", 14.90, false, Type.OTHER);
 		assertNotEquals(itemA,itemB);
 		assertNotEquals(itemA.hashCode(),itemB.hashCode());	
 		
 		//different import
-		itemB = new Item("War and Peace", 14.90, true, true);
+		itemB = new Item("War and Peace", 14.90, true, Type.BOOK);
 		assertNotEquals(itemA,itemB);
 		assertNotEquals(itemA.hashCode(),itemB.hashCode());	
 
 		//everything different
-		itemB = new Item("Moby Dick", 17, true, false);
+		itemB = new Item("Moby Dick", 17, true, Type.BOOK);
 		assertNotEquals(itemA,itemB);
 		assertNotEquals(itemA.hashCode(),itemB.hashCode());	
 		
@@ -103,7 +103,7 @@ public class ItemTest {
 	
 	@Test
 	public void testToString() {
-		Item item = new Item("War and Peace", 14.90, false, true);
+		Item item = new Item("War and Peace", 14.90, false, Type.BOOK);
 		assertEquals(item.toString(), "War and Peace, price: 14.90");
 	}
 	

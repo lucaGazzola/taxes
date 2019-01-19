@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.taxes.item.Item;
+import it.unimib.taxes.item.Type;
 
 import org.junit.Test;
 
@@ -19,9 +20,9 @@ public class InputParserTest {
 				+ "1 chocolate bar at 0.85\n";
 		List<Item> items = InputParser.parseItemList(firstInput);
 		
-		Item book = new Item("book", 12.49, false, true);
-		Item musicCD = new Item("music CD", 14.99, false, false);
-		Item chocolateBar = new Item("chocolate bar", 0.85, false, true);
+		Item book = new Item("book", 12.49, false, Type.BOOK);
+		Item musicCD = new Item("music CD", 14.99, false, Type.OTHER);
+		Item chocolateBar = new Item("chocolate bar", 0.85, false, Type.FOOD);
 		
 		List<Item> itemsToCheck = new ArrayList<Item>();
 		itemsToCheck.add(book);
@@ -38,8 +39,8 @@ public class InputParserTest {
 				+ "1 imported perfume at 47.50\n";
 		
 		List<Item> items = InputParser.parseItemList(firstInput);
-		Item importedChocolateA = new Item("imported box of chocolates", 10.00, true, true);
-		Item importedPerfumeA = new Item("imported perfume", 47.50, true, false);
+		Item importedChocolateA = new Item("imported box of chocolates", 10.00, true, Type.FOOD);
+		Item importedPerfumeA = new Item("imported perfume", 47.50, true, Type.OTHER);
 		
 		List<Item> itemsToCheck = new ArrayList<Item>();
 		itemsToCheck.add(importedChocolateA);
@@ -57,10 +58,10 @@ public class InputParserTest {
 				+ "1 imported box of chocolates at 11.25";
 		List<Item> items = InputParser.parseItemList(firstInput);
 		
-		Item importedPerfumeB = new Item("imported bottle of perfume", 27.99, true, false);
-		Item perfume = new Item("bottle of perfume", 18.99, false, false);
-		Item headachePills = new Item("packet of headache pills", 9.75, false, true);
-		Item importedChocolateB = new Item("imported box of chocolates", 11.25, true, true);
+		Item importedPerfumeB = new Item("imported bottle of perfume", 27.99, true, Type.OTHER);
+		Item perfume = new Item("bottle of perfume", 18.99, false, Type.OTHER);
+		Item headachePills = new Item("packet of headache pills", 9.75, false, Type.MEDICAL_PRODUCT);
+		Item importedChocolateB = new Item("imported box of chocolates", 11.25, true, Type.FOOD);
 		
 		List<Item> itemsToCheck = new ArrayList<Item>();
 		itemsToCheck.add(importedPerfumeB);
@@ -86,9 +87,9 @@ public class InputParserTest {
 				+ "1 chocolate bar at 0.85\n";
 		List<Item> items = InputParser.parseItemList(firstInput);
 		
-		Item book = new Item("book", 12.49, false, true);
-		Item musicCD = new Item("music CD", 14.99, false, false);
-		Item chocolateBar = new Item("chocolate bar", 0.85, false, true);
+		Item book = new Item("book", 12.49, false, Type.BOOK);
+		Item musicCD = new Item("music CD", 14.99, false, Type.OTHER);
+		Item chocolateBar = new Item("chocolate bar", 0.85, false, Type.FOOD);
 		
 		List<Item> itemsToCheck = new ArrayList<Item>();
 		itemsToCheck.add(book);

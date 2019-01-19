@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import it.unimib.taxes.item.Item;
+import it.unimib.taxes.item.Type;
 
 public class InputParser {
 	
@@ -20,6 +21,8 @@ public class InputParser {
 		
 		for(String line: lines) {
 			
+			Type itemType = Type.OTHER;
+			
 			String parts[] = line.split(" at ");
 			String description[] = parts[0].split(" ");
 			
@@ -33,11 +36,19 @@ public class InputParser {
 			
 			double price = Double.parseDouble(parts[1]);
 			boolean imported = name.contains("imported");
-			boolean exempt = name.contains("book") || parts[0].contains("chocolate")
-					|| parts[0].contains("pills");
+			
+			if(name.contains("book")) {
+				itemType = Type.BOOK;
+			}
+			if(name.contains("chocolate")) {
+				itemType = Type.FOOD;
+			}
+			if(name.contains("pills")) {
+				itemType = Type.MEDICAL_PRODUCT;
+			}
 			
 			for(int i = 0; i < quantity; i++) {
-				items.add(new Item(name, price, imported, exempt));
+				items.add(new Item(name, price, imported, itemType));
 			}
 			
 		}
