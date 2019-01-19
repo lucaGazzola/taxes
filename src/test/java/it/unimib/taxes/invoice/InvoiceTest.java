@@ -30,9 +30,9 @@ public class InvoiceTest {
 	Item importedPerfumeA = new Item("imported perfume", 47.50, true, false);
 
 	// input 3
-	Item importedPerfumeB = new Item("imported perfume", 27.99, true, false);
-	Item perfume = new Item("perfume", 18.99, false, false);
-	Item headachePills = new Item("headache pills", 9.75, false, true);
+	Item importedPerfumeB = new Item("imported bottle of perfume", 27.99, true, false);
+	Item perfume = new Item("bottle of perfume", 18.99, false, false);
+	Item headachePills = new Item("packet of headache pills", 9.75, false, true);
 	Item importedChocolateB = new Item("imported box of chocolate", 11.25, true, true);
 	
 	TaxesCalculator calculator = new MyTaxesCalculator();
@@ -183,6 +183,52 @@ public class InvoiceTest {
 		assertEquals(invoice.getTotalPrice(), 74.68, EPSILON);
 		assertEquals(invoice.getTaxes(), 6.70, EPSILON);
 		
+	}
+	
+	@Test
+	public void testDuplicateItem() {
+		
+		Invoice invoice = new Invoice(1, "luca", calculator);
+		invoice.addItem(importedPerfumeB);
+		invoice.addItem(importedPerfumeB);
+		invoice.addItem(perfume);
+		invoice.addItem(headachePills);
+		invoice.addItem(importedChocolateB);
+		
+		assertEquals(invoice.getTotalPrice(), 106.87, EPSILON);
+		assertEquals(invoice.getTaxes(), 10.90, EPSILON);
+		
+	}
+	
+	@Test
+	public void testToString() {
+		Invoice invoice = new Invoice(1, "luca", calculator);
+		invoice.addItem(importedPerfumeB);
+		invoice.addItem(perfume);
+		invoice.addItem(headachePills);
+		invoice.addItem(importedChocolateB);
+		
+		assertEquals(invoice.toString(),"1 imported bottle of perfume: 32.19\n"
+				+ "1 bottle of perfume: 20.89\n"
+				+ "1 packet of headache pills: 9.75\n"
+				+ "1 imported box of chocolate: 11.85\n"
+				+ "Sales Taxes: 6.70\nTotal: 74.68");
+	}
+	
+	@Test
+	public void testToStringDuplicateItem() {
+		Invoice invoice = new Invoice(1, "luca", calculator);
+		invoice.addItem(importedPerfumeB);
+		invoice.addItem(importedPerfumeB);
+		invoice.addItem(perfume);
+		invoice.addItem(headachePills);
+		invoice.addItem(importedChocolateB);
+		
+		assertEquals(invoice.toString(),"2 imported bottle of perfume: 32.19\n"
+				+ "1 bottle of perfume: 20.89\n"
+				+ "1 packet of headache pills: 9.75\n"
+				+ "1 imported box of chocolate: 11.85\n"
+				+ "Sales Taxes: 10.90\nTotal: 106.87");
 	}
 
 }

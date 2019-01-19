@@ -88,5 +88,10 @@ public class Item {
 	public int hashCode() {
 		return Objects.hash(this.name, this.price, this.imported, this.exempt);
 	}
+	
+	@Override
+	public String toString() {
+		return this.name+", price: "+String.format("%.2f", price);
+	}
 
 }

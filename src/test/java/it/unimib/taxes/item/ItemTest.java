@@ -101,4 +101,10 @@ public class ItemTest {
 		
 	}
 	
+	@Test
+	public void testToString() {
+		Item item = new Item("War and Peace", 14.90, false, true);
+		assertEquals(item.toString(), "War and Peace, price: 14.90");
+	}
+	
 }

@@ -1,8 +1,12 @@
 package it.unimib.taxes.invoice;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import it.unimib.taxes.item.Item;
 import it.unimib.taxes.utils.TaxesCalculator;
@@ -129,6 +133,36 @@ public class Invoice {
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.customerName, this.id, this.items);
+	}
+	
+	@Override
+	public String toString() {
+		
+		String invoice = "";
+		
+		if(items.isEmpty()) {
+			return "This invoice contains no items.";
+		}
+		
+		Set<Item> itemSet = new LinkedHashSet<Item>(items);
+		
+		for(Item item: itemSet) {
+			
+			double fullPrice = item.getPrice() + calculator.calculateTaxes(item);
+			
+			invoice += Collections.frequency(items, item);
+			invoice += " ";
+			invoice += item.getName();
+			invoice += ": ";
+			invoice += String.format("%.2f", fullPrice);
+			invoice += "\n";
+			
+		}
+		
+		invoice += "Sales Taxes: "+String.format("%.2f", getTaxes())+"\n";
+		invoice += "Total: "+String.format("%.2f", getTotalPrice());
+		return invoice;
+		
 	}
 
 }
