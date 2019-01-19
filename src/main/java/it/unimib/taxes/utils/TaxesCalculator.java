@@ -15,14 +15,12 @@ public class TaxesCalculator {
 		if(item.isImported()) {
 			
 			tax += Math.ceil((item.getPrice() * IMPORT_TAX) * 20.0) / 20.0;
-			System.out.println(tax);
 			
 		}
 		
 		if(!item.isExempt()) {
 			
 			tax += Math.ceil((item.getPrice() * BASIC_TAX) * 20.0) / 20.0;
-			System.out.println(tax);
 
 		}
 		

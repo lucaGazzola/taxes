@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import it.unimib.taxes.item.Item;
+import it.unimib.taxes.utils.TaxesCalculator;
 
 public class Invoice {
 	
@@ -66,14 +67,28 @@ public class Invoice {
 		return customerName;
 	}
 	
-	// TODO implement this
-	public double getTotalPrice() throws Exception {
-		throw(new Exception("not implemented"));		
+	public double getTotalPrice() {
+		
+		double total = 0;
+		
+		for(Item item : items) {
+			total += item.getPrice() + TaxesCalculator.calculateTaxes(item);
+		}
+		
+		return total;
+		
 	}
 	
-	// TODO implement this
-	public double getTaxes() throws Exception {
-		throw(new Exception("not implemented"));		
+	public double getTaxes() {
+		
+		double total = 0;
+		
+		for(Item item : items) {
+			total += TaxesCalculator.calculateTaxes(item);
+		}
+		
+		return total;	
+	
 	}
 	
 	@Override

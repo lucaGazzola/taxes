@@ -15,25 +15,38 @@ import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
 public class InvoiceTest {
+	
+	private static final double EPSILON = 0.00001;
 		
-	Item itemA = new Item("book", 12.49, false, true);
-	Item itemB = new Item("music CD", 14.99, false, false);
-	Item itemC = new Item("chocolate bar", 0.85, false, true);
+	// input 1
+	Item book = new Item("book", 12.49, false, true);
+	Item musicCD = new Item("music CD", 14.99, false, false);
+	Item chocolateBar = new Item("chocolate bar", 0.85, false, true);
+
+	// input 2
+	Item importedChocolateA = new Item("imported box of chocolate", 10.00, true, true);
+	Item importedPerfumeA = new Item("imported perfume", 47.50, true, false);
+
+	// input 3
+	Item importedPerfumeB = new Item("imported perfume", 27.99, true, false);
+	Item perfume = new Item("perfume", 18.99, false, false);
+	Item headachePills = new Item("headache pills", 9.75, false, true);
+	Item importedChocolateB = new Item("imported box of chocolate", 11.25, true, true);
 	
 	@Test
 	public void testConstructorAndGetters() {
 		
 		Invoice invoice = new Invoice(1, "luca");
-		invoice.addItem(itemA);
-		invoice.addItem(itemB);
-		invoice.addItem(itemC);
+		invoice.addItem(book);
+		invoice.addItem(musicCD);
+		invoice.addItem(chocolateBar);
 		assertEquals(invoice.getId(), 1);
 		assertEquals(invoice.getCustomerName(), "luca");
 		
 		List<Item> items = new ArrayList<Item>();
-		items.add(itemA);
-		items.add(itemB);
-		items.add(itemC);
+		items.add(book);
+		items.add(musicCD);
+		items.add(chocolateBar);
 		
 		assertEquals(invoice.getItems(), items);
 		
@@ -86,48 +99,87 @@ public class InvoiceTest {
 		Item itemD = new Item("imported bottle of perfume", 47.50, true, false);
 		
 		Invoice invoiceA = new Invoice(1, "luca");
-		invoiceA.addItem(itemA);
-		invoiceA.addItem(itemB);
-		invoiceA.addItem(itemC);
+		invoiceA.addItem(book);
+		invoiceA.addItem(musicCD);
+		invoiceA.addItem(chocolateBar);
 		
 		Invoice invoiceB = new Invoice(1, "luca");
-		invoiceB.addItem(itemA);
-		invoiceB.addItem(itemB);
-		invoiceB.addItem(itemC);
+		invoiceB.addItem(book);
+		invoiceB.addItem(musicCD);
+		invoiceB.addItem(chocolateBar);
 
 		assertEquals(invoiceA, invoiceB);
 		assertEquals(invoiceA.hashCode(), invoiceB.hashCode());
 		
 		// different id
 		invoiceB = new Invoice(2, "luca");
-		invoiceB.addItem(itemA);
-		invoiceB.addItem(itemB);
-		invoiceB.addItem(itemC);		
+		invoiceB.addItem(book);
+		invoiceB.addItem(musicCD);
+		invoiceB.addItem(chocolateBar);		
 		assertNotEquals(invoiceA,invoiceB);	
 		assertNotEquals(invoiceA.hashCode(),invoiceB.hashCode());	
 		
 		// different name
 		invoiceB = new Invoice(1, "franco");
-		invoiceB.addItem(itemA);
-		invoiceB.addItem(itemB);
-		invoiceB.addItem(itemC);		
+		invoiceB.addItem(book);
+		invoiceB.addItem(musicCD);
+		invoiceB.addItem(chocolateBar);		
 		assertNotEquals(invoiceA,invoiceB);			
 		assertNotEquals(invoiceA.hashCode(),invoiceB.hashCode());	
 		
 		//different items
 		invoiceB = new Invoice(1, "luca");
-		invoiceB.addItem(itemA);
-		invoiceB.addItem(itemB);
-		invoiceB.addItem(itemC);
-		invoiceB.addItem(itemD);
+		invoiceB.addItem(book);
+		invoiceB.addItem(musicCD);
+		invoiceB.addItem(chocolateBar);
+		invoiceB.addItem(importedChocolateA);
 		assertNotEquals(invoiceA,invoiceB);			
 		assertNotEquals(invoiceA.hashCode(),invoiceB.hashCode());
 
 		//everything different
 		invoiceB = new Invoice(2, "franco");
-		invoiceB.addItem(itemD);
+		invoiceB.addItem(importedChocolateA);
 		assertNotEquals(invoiceA,invoiceB);			
 		assertNotEquals(invoiceA.hashCode(),invoiceB.hashCode());
+		
+	}
+	
+	@Test
+	public void testFirstInput() {
+		
+		Invoice invoice = new Invoice(1, "luca");
+		invoice.addItem(book);
+		invoice.addItem(musicCD);
+		invoice.addItem(chocolateBar);
+		
+		assertEquals(invoice.getTotalPrice(), 29.83, EPSILON);
+		assertEquals(invoice.getTaxes(), 1.50, EPSILON);
+		
+	}
+	
+	@Test
+	public void testSecondInput() {
+		
+		Invoice invoice = new Invoice(1, "luca");
+		invoice.addItem(importedChocolateA);
+		invoice.addItem(importedPerfumeA);
+		
+		assertEquals(invoice.getTotalPrice(), 65.15, EPSILON);
+		assertEquals(invoice.getTaxes(), 7.65, EPSILON);
+		
+	}
+	
+	@Test
+	public void testThirdInput() {
+		
+		Invoice invoice = new Invoice(1, "luca");
+		invoice.addItem(importedPerfumeB);
+		invoice.addItem(perfume);
+		invoice.addItem(headachePills);
+		invoice.addItem(importedChocolateB);
+		
+		assertEquals(invoice.getTotalPrice(), 74.68, EPSILON);
+		assertEquals(invoice.getTaxes(), 6.70, EPSILON);
 		
 	}
 
