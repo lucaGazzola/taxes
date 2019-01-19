@@ -68,8 +68,36 @@ public class InputParserTest {
 		itemsToCheck.add(headachePills);
 		itemsToCheck.add(importedChocolateB);
 
+		assertEquals(itemsToCheck, items);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testEmptyString() {
+		
+		InputParser.parseItemList("");
+		
+	}
+	
+	@Test
+	public void testDuplicateItem() {
+		
+		String firstInput = "2 book at 12.49\n"
+				+ "1 music CD at 14.99\n"
+				+ "1 chocolate bar at 0.85\n";
+		List<Item> items = InputParser.parseItemList(firstInput);
+		
+		Item book = new Item("book", 12.49, false, true);
+		Item musicCD = new Item("music CD", 14.99, false, false);
+		Item chocolateBar = new Item("chocolate bar", 0.85, false, true);
+		
+		List<Item> itemsToCheck = new ArrayList<Item>();
+		itemsToCheck.add(book);
+		itemsToCheck.add(book);
+		itemsToCheck.add(musicCD);
+		itemsToCheck.add(chocolateBar);
 		
 		assertEquals(itemsToCheck, items);
+		
 	}
 
 }

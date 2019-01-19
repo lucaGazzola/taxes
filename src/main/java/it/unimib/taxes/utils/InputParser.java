@@ -12,6 +12,10 @@ public class InputParser {
 		
 		List<Item> items = new ArrayList<Item>();
 		
+		if(itemList == "") {
+			throw(new IllegalArgumentException("Empty item list!"));
+		}
+		
 		String lines[] = itemList.split("\\r?\\n");
 		
 		for(String line: lines) {
