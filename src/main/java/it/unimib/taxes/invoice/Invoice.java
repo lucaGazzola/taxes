@@ -54,6 +54,14 @@ public class Invoice {
 		
 	}
 	
+	public void addItems(List<Item> itemList) {
+		
+		for(Item item : itemList) {
+			items.add(item);
+		}
+		
+	}
+	
 	public boolean removeItem(Item item) {
 		
 		if(items.contains(item)) {

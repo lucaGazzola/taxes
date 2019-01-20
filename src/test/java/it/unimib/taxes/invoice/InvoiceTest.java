@@ -31,14 +31,14 @@ public class InvoiceTest {
 	Item chocolateBar = new Item("chocolate bar", 0.85, false, Type.FOOD);
 
 	// input 2
-	Item importedChocolateA = new Item("imported box of chocolate", 10.00, true, Type.FOOD);
+	Item importedChocolateA = new Item("imported box of chocolates", 10.00, true, Type.FOOD);
 	Item importedPerfumeA = new Item("imported perfume", 47.50, true, Type.OTHER);
 
 	// input 3
 	Item importedPerfumeB = new Item("imported bottle of perfume", 27.99, true, Type.OTHER);
 	Item perfume = new Item("bottle of perfume", 18.99, false, Type.OTHER);
 	Item headachePills = new Item("packet of headache pills", 9.75, false, Type.MEDICAL_PRODUCT);
-	Item importedChocolateB = new Item("imported box of chocolate", 11.25, true, Type.OTHER);
+	Item importedChocolateB = new Item("imported box of chocolates", 11.25, true, Type.OTHER);
 	
 	@Mock
 	TaxesCalculator calculator;
@@ -60,6 +60,23 @@ public class InvoiceTest {
 		items.add(book);
 		items.add(musicCD);
 		items.add(chocolateBar);
+		
+		assertEquals(items, invoice.getItems());
+		
+		
+	}
+	
+	@Test
+	public void testAddItemList() {
+		
+		Invoice invoice = new Invoice(1, "luca", calculator);
+		
+		List<Item> items = new ArrayList<Item>();
+		items.add(book);
+		items.add(musicCD);
+		items.add(chocolateBar);
+		
+		invoice.addItems(items);
 		
 		assertEquals(items, invoice.getItems());
 		
@@ -244,7 +261,7 @@ public class InvoiceTest {
 		assertEquals("1 imported bottle of perfume: 32.19\n"
 				+ "1 bottle of perfume: 20.89\n"
 				+ "1 packet of headache pills: 9.75\n"
-				+ "1 imported box of chocolate: 11.85\n"
+				+ "1 imported box of chocolates: 11.85\n"
 				+ "Sales Taxes: 6.70\nTotal: 74.68", invoice.toString());
 	}
 	
@@ -265,7 +282,7 @@ public class InvoiceTest {
 		assertEquals("2 imported bottle of perfume: 32.19\n"
 				+ "1 bottle of perfume: 20.89\n"
 				+ "1 packet of headache pills: 9.75\n"
-				+ "1 imported box of chocolate: 11.85\n"
+				+ "1 imported box of chocolates: 11.85\n"
 				+ "Sales Taxes: 10.90\nTotal: 106.87", invoice.toString());
 	}
 

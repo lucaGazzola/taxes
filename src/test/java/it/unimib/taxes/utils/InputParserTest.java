@@ -17,7 +17,7 @@ public class InputParserTest {
 		
 		String firstInput = "1 book at 12.49\n"
 				+ "1 music CD at 14.99\n"
-				+ "1 chocolate bar at 0.85\n";
+				+ "1 chocolate bar at 0.85";
 		
 		List<Item> items = InputParser.parseItemList(firstInput);
 		
@@ -36,10 +36,10 @@ public class InputParserTest {
 	@Test
 	public void testSecondInput() {
 		
-		String firstInput = "1 imported box of chocolates at 10.00\n"
-				+ "1 imported perfume at 47.50\n";
+		String secondInput = "1 imported box of chocolates at 10.00\n"
+				+ "1 imported perfume at 47.50";
 		
-		List<Item> items = InputParser.parseItemList(firstInput);
+		List<Item> items = InputParser.parseItemList(secondInput);
 		Item importedChocolateA = new Item("imported box of chocolates", 10.00, true, Type.FOOD);
 		Item importedPerfumeA = new Item("imported perfume", 47.50, true, Type.OTHER);
 		
@@ -53,12 +53,12 @@ public class InputParserTest {
 	@Test
 	public void testThirdInput() {
 		
-		String firstInput = "1 imported bottle of perfume at 27.99\n"
+		String thirdInput = "1 imported bottle of perfume at 27.99\n"
 				+ "1 bottle of perfume at 18.99\n"
 				+ "1 packet of headache pills at 9.75\n"
 				+ "1 imported box of chocolates at 11.25";
 		
-		List<Item> items = InputParser.parseItemList(firstInput);
+		List<Item> items = InputParser.parseItemList(thirdInput);
 		
 		Item importedPerfumeB = new Item("imported bottle of perfume", 27.99, true, Type.OTHER);
 		Item perfume = new Item("bottle of perfume", 18.99, false, Type.OTHER);
@@ -77,11 +77,11 @@ public class InputParserTest {
 	@Test
 	public void testBigPrices() {
 		
-		String firstInput = "1 guitar at 10500.00\n"
+		String input = "1 guitar at 10500.00\n"
 				+ "1 car at 74000.50\n"
-				+ "1 imported galaxy at 1E300\n";
+				+ "1 imported galaxy at 1E300";
 		
-		List<Item> items = InputParser.parseItemList(firstInput);
+		List<Item> items = InputParser.parseItemList(input);
 		
 		Item guitar = new Item("guitar", 10500.00, false, Type.OTHER);
 		Item car = new Item("car", 74000.50, false, Type.OTHER);
@@ -98,11 +98,11 @@ public class InputParserTest {
 	@Test
 	public void testItemNames() {
 		
-		String firstInput = "1 a at 20.00\n"
+		String input = "1 a at 20.00\n"
 				+ "1 città at 10000000.00\n"
-				+ "1 шоколад at 2.99\n";
+				+ "1 шоколад at 2.99";
 		
-		List<Item> items = InputParser.parseItemList(firstInput);
+		List<Item> items = InputParser.parseItemList(input);
 		
 		Item a = new Item("a", 20.00, false, Type.OTHER);
 		Item citta = new Item("città", 10000000.00, false, Type.OTHER);
@@ -126,10 +126,10 @@ public class InputParserTest {
 	@Test
 	public void testDuplicateItem() {
 		
-		String firstInput = "2 book at 12.49\n"
+		String input = "2 book at 12.49\n"
 				+ "1 music CD at 14.99\n"
-				+ "1 chocolate bar at 0.85\n";
-		List<Item> items = InputParser.parseItemList(firstInput);
+				+ "1 chocolate bar at 0.85";
+		List<Item> items = InputParser.parseItemList(input);
 		
 		Item book = new Item("book", 12.49, false, Type.BOOK);
 		Item musicCD = new Item("music CD", 14.99, false, Type.OTHER);
