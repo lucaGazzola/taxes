@@ -34,36 +34,60 @@ public class MyTaxesCalculatorTest {
 	@Test
 	public void testExemptNotImported() {
 		
-		assertEquals(calculator.calculateTaxes(book), 0, EPSILON);	
-		assertEquals(calculator.calculateTaxes(chocolateBar), 0, EPSILON);	
-		assertEquals(calculator.calculateTaxes(headachePills), 0, EPSILON);	
+		assertEquals(0, calculator.calculateTaxes(book), EPSILON);	
+		assertEquals(0, calculator.calculateTaxes(chocolateBar), EPSILON);	
+		assertEquals(0, calculator.calculateTaxes(headachePills), EPSILON);	
 
 	}
 	
 	@Test
 	public void testNotExemptNotImported() {
 		
-		assertEquals(calculator.calculateTaxes(musicCD), 1.5, EPSILON);
-		assertEquals(calculator.calculateTaxes(guitar), 75, EPSILON);
-		assertEquals(calculator.calculateTaxes(perfume), 1.9, EPSILON);	
+		assertEquals(1.5, calculator.calculateTaxes(musicCD), EPSILON);
+		assertEquals(75, calculator.calculateTaxes(guitar), EPSILON);
+		assertEquals(1.9, calculator.calculateTaxes(perfume), EPSILON);	
 
-		
 	}
 	
 	@Test
 	public void testExemptImported() {
 		
-		assertEquals(calculator.calculateTaxes(importedChocolateA), 0.5, EPSILON);
-		assertEquals(calculator.calculateTaxes(importedChocolateB), 0.6, EPSILON);	
+		assertEquals(0.5, calculator.calculateTaxes(importedChocolateA), EPSILON);
+		assertEquals(0.6, calculator.calculateTaxes(importedChocolateB), EPSILON);	
 		
 	}
 	
 	@Test
 	public void testNotExemptImported() {
 		
-		assertEquals(calculator.calculateTaxes(importedPerfumeA), 7.15, EPSILON);	
-		assertEquals(calculator.calculateTaxes(importedPerfumeB), 4.2, EPSILON);	
+		assertEquals(7.15, calculator.calculateTaxes(importedPerfumeA), EPSILON);	
+		assertEquals(4.2, calculator.calculateTaxes(importedPerfumeB), EPSILON);	
+	
+	}
+	
+	@Test
+	public void testBigPrices() {
+		
+		Item galaxy = new Item("imported galaxy", 1E300, true, Type.OTHER);
+		Item planet = new Item("planet", 10000000000000.00, false, Type.OTHER);
+		Item ocean = new Item("ocean", 1E250, true, Type.FOOD);
 
+		assertEquals(1.5e299, calculator.calculateTaxes(galaxy), EPSILON);	
+		assertEquals(1000000000000.00, calculator.calculateTaxes(planet), EPSILON);	
+		assertEquals(5e248, calculator.calculateTaxes(ocean), EPSILON);	
+	
+	}
+	
+	@Test
+	public void testSmallPrices() {
+		
+		Item stone = new Item("stone", 0.05, false, Type.OTHER);
+		Item sheet = new Item("imported sheet", 0.01, true, Type.OTHER);
+		Item crumb = new Item("crumb", 0.01, false, Type.FOOD);
+
+		assertEquals(0.05, calculator.calculateTaxes(stone), EPSILON);	
+		assertEquals(0.1, calculator.calculateTaxes(sheet), EPSILON);	
+		assertEquals(0, calculator.calculateTaxes(crumb), EPSILON);		
 		
 	}
 

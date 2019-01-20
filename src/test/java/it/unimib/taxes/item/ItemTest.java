@@ -19,10 +19,25 @@ public class ItemTest {
 	public void testConstructorAndGetters() {
 		
 		Item item = new Item("War and Peace", 14.90, false, Type.BOOK);
-		assertEquals(item.getName(), "War and Peace");
-		assertEquals(item.getPrice(), 14.90, EPSILON);
-		assertEquals(item.isImported(), false);
-		assertEquals(item.getType(), Type.BOOK);
+		assertEquals("War and Peace", item.getName());
+		assertEquals(14.90, item.getPrice(), EPSILON);
+		assertEquals(false, item.isImported());
+		assertEquals(Type.BOOK, item.getType());
+		
+	}
+	
+	@Test
+	public void testItemTypes() {
+		
+		Item itemA = new Item("War and Peace", 14.90, false, Type.BOOK);
+		Item itemB = new Item("Chinese Noodles", 2.90, false, Type.FOOD);
+		Item itemC = new Item("Paracetamol", 5.90, false, Type.MEDICAL_PRODUCT);
+		Item itemD = new Item("Guitar", 847.90, false, Type.OTHER);
+
+		assertEquals(Type.BOOK, itemA.getType());
+		assertEquals(Type.FOOD, itemB.getType());
+		assertEquals(Type.MEDICAL_PRODUCT, itemC.getType());
+		assertEquals(Type.OTHER, itemD.getType());
 		
 	}
 	
@@ -53,7 +68,7 @@ public class ItemTest {
 	public void testLegalPriceArgument(double price) {
 		
 		Item item = new Item("War and Peace", price, false, Type.BOOK);
-		assertEquals(item.getPrice(), price, EPSILON);
+		assertEquals(price, item.getPrice(), EPSILON);
 		
 	}
 	
@@ -62,7 +77,7 @@ public class ItemTest {
 	public void testLegalNameArgument(String name) {
 		
 		Item item = new Item(name, 14.90, false, Type.BOOK);
-		assertEquals(item.getName(), name);
+		assertEquals(name, item.getName());
 		
 	}
 	
@@ -104,7 +119,7 @@ public class ItemTest {
 	@Test
 	public void testToString() {
 		Item item = new Item("War and Peace", 14.90, false, Type.BOOK);
-		assertEquals(item.toString(), "War and Peace, price: 14.90");
+		assertEquals("War and Peace, price: 14.90", item.toString());
 	}
 	
 }

@@ -53,15 +53,15 @@ public class InvoiceTest {
 		invoice.addItem(book);
 		invoice.addItem(musicCD);
 		invoice.addItem(chocolateBar);
-		assertEquals(invoice.getId(), 1);
-		assertEquals(invoice.getCustomerName(), "luca");
+		assertEquals(1, invoice.getId());
+		assertEquals("luca", invoice.getCustomerName());
 		
 		List<Item> items = new ArrayList<Item>();
 		items.add(book);
 		items.add(musicCD);
 		items.add(chocolateBar);
 		
-		assertEquals(invoice.getItems(), items);
+		assertEquals(items, invoice.getItems());
 		
 		
 	}
@@ -93,7 +93,7 @@ public class InvoiceTest {
 	public void testLegalPriceArgument(int id) {
 		
 		Invoice invoice = new Invoice(id, "luca", calculator);
-		assertEquals(invoice.getId(), id);
+		assertEquals(id, invoice.getId());
 		
 	}
 	
@@ -102,7 +102,7 @@ public class InvoiceTest {
 	public void testLegalNameArgument(String name) {
 		
 		Invoice invoice = new Invoice(1, name, calculator);
-		assertEquals(invoice.getCustomerName(), name);
+		assertEquals(name, invoice.getCustomerName());
 		
 	}
 	
@@ -168,8 +168,8 @@ public class InvoiceTest {
 		when(calculator.calculateTaxes(chocolateBar)).thenReturn(0.0);
 
 		
-		assertEquals(invoice.getTotalPrice(), 29.83, EPSILON);
-		assertEquals(invoice.getTaxes(), 1.50, EPSILON);
+		assertEquals(29.83, invoice.getTotalPrice(), EPSILON);
+		assertEquals(1.50, invoice.getTaxes(), EPSILON);
 		
 	}
 	
@@ -183,8 +183,8 @@ public class InvoiceTest {
 		when(calculator.calculateTaxes(importedChocolateA)).thenReturn(0.5);
 		when(calculator.calculateTaxes(importedPerfumeA)).thenReturn(7.15);
 		
-		assertEquals(invoice.getTotalPrice(), 65.15, EPSILON);
-		assertEquals(invoice.getTaxes(), 7.65, EPSILON);
+		assertEquals(65.15, invoice.getTotalPrice(), EPSILON);
+		assertEquals(7.65, invoice.getTaxes(), EPSILON);
 		
 	}
 	
@@ -203,8 +203,8 @@ public class InvoiceTest {
 		when(calculator.calculateTaxes(importedChocolateB)).thenReturn(0.6);
 
 		
-		assertEquals(invoice.getTotalPrice(), 74.68, EPSILON);
-		assertEquals(invoice.getTaxes(), 6.70, EPSILON);
+		assertEquals(74.68, invoice.getTotalPrice(), EPSILON);
+		assertEquals(6.70, invoice.getTaxes(), EPSILON);
 		
 	}
 	
@@ -223,8 +223,8 @@ public class InvoiceTest {
 		when(calculator.calculateTaxes(headachePills)).thenReturn(0.0);
 		when(calculator.calculateTaxes(importedChocolateB)).thenReturn(0.6);
 		
-		assertEquals(invoice.getTotalPrice(), 106.87, EPSILON);
-		assertEquals(invoice.getTaxes(), 10.90, EPSILON);
+		assertEquals(106.87, invoice.getTotalPrice(), EPSILON);
+		assertEquals(10.90, invoice.getTaxes(), EPSILON);
 		
 	}
 	
@@ -241,11 +241,11 @@ public class InvoiceTest {
 		when(calculator.calculateTaxes(headachePills)).thenReturn(0.0);
 		when(calculator.calculateTaxes(importedChocolateB)).thenReturn(0.6);
 		
-		assertEquals(invoice.toString(),"1 imported bottle of perfume: 32.19\n"
+		assertEquals("1 imported bottle of perfume: 32.19\n"
 				+ "1 bottle of perfume: 20.89\n"
 				+ "1 packet of headache pills: 9.75\n"
 				+ "1 imported box of chocolate: 11.85\n"
-				+ "Sales Taxes: 6.70\nTotal: 74.68");
+				+ "Sales Taxes: 6.70\nTotal: 74.68", invoice.toString());
 	}
 	
 	@Test
@@ -262,11 +262,11 @@ public class InvoiceTest {
 		when(calculator.calculateTaxes(headachePills)).thenReturn(0.0);
 		when(calculator.calculateTaxes(importedChocolateB)).thenReturn(0.6);
 		
-		assertEquals(invoice.toString(),"2 imported bottle of perfume: 32.19\n"
+		assertEquals("2 imported bottle of perfume: 32.19\n"
 				+ "1 bottle of perfume: 20.89\n"
 				+ "1 packet of headache pills: 9.75\n"
 				+ "1 imported box of chocolate: 11.85\n"
-				+ "Sales Taxes: 10.90\nTotal: 106.87");
+				+ "Sales Taxes: 10.90\nTotal: 106.87", invoice.toString());
 	}
 
 }

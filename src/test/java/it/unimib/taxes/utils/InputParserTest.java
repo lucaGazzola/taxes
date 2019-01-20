@@ -18,6 +18,7 @@ public class InputParserTest {
 		String firstInput = "1 book at 12.49\n"
 				+ "1 music CD at 14.99\n"
 				+ "1 chocolate bar at 0.85\n";
+		
 		List<Item> items = InputParser.parseItemList(firstInput);
 		
 		Item book = new Item("book", 12.49, false, Type.BOOK);
@@ -56,6 +57,7 @@ public class InputParserTest {
 				+ "1 bottle of perfume at 18.99\n"
 				+ "1 packet of headache pills at 9.75\n"
 				+ "1 imported box of chocolates at 11.25";
+		
 		List<Item> items = InputParser.parseItemList(firstInput);
 		
 		Item importedPerfumeB = new Item("imported bottle of perfume", 27.99, true, Type.OTHER);
@@ -69,6 +71,48 @@ public class InputParserTest {
 		itemsToCheck.add(headachePills);
 		itemsToCheck.add(importedChocolateB);
 
+		assertEquals(itemsToCheck, items);
+	}
+	
+	@Test
+	public void testBigPrices() {
+		
+		String firstInput = "1 guitar at 10500.00\n"
+				+ "1 car at 74000.50\n"
+				+ "1 imported galaxy at 1E300\n";
+		
+		List<Item> items = InputParser.parseItemList(firstInput);
+		
+		Item guitar = new Item("guitar", 10500.00, false, Type.OTHER);
+		Item car = new Item("car", 74000.50, false, Type.OTHER);
+		Item galaxy = new Item("imported galaxy", 1E300, true, Type.OTHER);
+		
+		List<Item> itemsToCheck = new ArrayList<Item>();
+		itemsToCheck.add(guitar);
+		itemsToCheck.add(car);
+		itemsToCheck.add(galaxy);
+		
+		assertEquals(itemsToCheck, items);
+	}
+	
+	@Test
+	public void testItemNames() {
+		
+		String firstInput = "1 a at 20.00\n"
+				+ "1 città at 10000000.00\n"
+				+ "1 шоколад at 2.99\n";
+		
+		List<Item> items = InputParser.parseItemList(firstInput);
+		
+		Item a = new Item("a", 20.00, false, Type.OTHER);
+		Item citta = new Item("città", 10000000.00, false, Type.OTHER);
+		Item chocolate = new Item("шоколад", 2.99, false, Type.OTHER);
+		
+		List<Item> itemsToCheck = new ArrayList<Item>();
+		itemsToCheck.add(a);
+		itemsToCheck.add(citta);
+		itemsToCheck.add(chocolate);
+		
 		assertEquals(itemsToCheck, items);
 	}
 	
