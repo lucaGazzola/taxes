@@ -7,7 +7,7 @@ This project implements a simple tax calculator on a list of items.
 
 ## Assumptions
 
-The input is supplied as `String` that represents a list of items in the following form:
+The input is supplied as a `String` that represents a list of items in the following form:
 
 `item quantity` `item name` at `item price`
 
@@ -32,3 +32,4 @@ Total: 29.83
 ```
 
 Input prices must be positive and have at most 2 numbers representing the fractional part.
+Item quantities must be positive.
