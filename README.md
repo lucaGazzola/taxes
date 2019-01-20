@@ -31,4 +31,4 @@ Sales Taxes: 1.50
 Total: 29.83
 ```
 
-Input prices must have at most 2 numbers representing the fractional part.
+Input prices must be positive and have at most 2 numbers representing the fractional part.
