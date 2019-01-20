@@ -144,5 +144,23 @@ public class InputParserTest {
 		assertEquals(itemsToCheck, items);
 		
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testZeroQuantity() {
+		
+		String input = "0 book at 12.49";
+
+		List<Item> items = InputParser.parseItemList(input);
+
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testNegativeQuantity() {
+		
+		String input = "-1 book at 12.49";
+
+		List<Item> items = InputParser.parseItemList(input);
+
+	}
 
 }

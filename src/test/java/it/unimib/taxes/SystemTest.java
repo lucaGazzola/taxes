@@ -64,4 +64,36 @@ public class SystemTest {
 		
 	}
 	
+	@Test
+	public void testMultipleItems() {
+		
+		String input = "2 imported bottle of perfume at 27.99\n"
+				+ "9 bottle of perfume at 18.99\n"
+				+ "1 packet of headache pills at 9.75\n"
+				+ "100 imported box of chocolates at 11.25";
+		
+		Invoice invoice = new Invoice(1, "luca", calculator);
+		invoice.addItems(InputParser.parseItemList(input));
+		
+		assertEquals("2 imported bottle of perfume: 32.19\n"
+				+ "9 bottle of perfume: 20.89\n"
+				+ "1 packet of headache pills: 9.75\n"
+				+ "100 imported box of chocolates: 11.85\n"
+				+ "Sales Taxes: 85.50\nTotal: 1447.14", invoice.toString());
+		
+	}
+	
+	@Test
+	public void testSingleItem() {
+		
+		String input = "1 imported bottle of perfume at 27.99";
+		
+		Invoice invoice = new Invoice(1, "luca", calculator);
+		invoice.addItems(InputParser.parseItemList(input));
+		
+		assertEquals("1 imported bottle of perfume: 32.19\n"
+				+ "Sales Taxes: 4.20\nTotal: 32.19", invoice.toString());
+		
+	}
+	
 }

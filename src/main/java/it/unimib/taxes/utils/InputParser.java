@@ -34,6 +34,10 @@ public class InputParser {
 			
 			int quantity = Integer.parseInt(description[0]);
 			
+			if(!(quantity > 0)) {
+				throw(new IllegalArgumentException("Item quantities must be positive!"));
+			}
+			
 			double price = Double.parseDouble(parts[1]);
 			boolean imported = name.contains("imported");
 			
